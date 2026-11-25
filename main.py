@@ -18,6 +18,9 @@ def main() -> None:
         raise ValueError(f"fortune is {len(line.split())} words, must be at most 20")
     if "\n" in line or "\r" in line:
         raise ValueError("fortune must be a single line")
+    # The house style rule: no em dash or en dash anywhere in the entry.
+    if "\u2014" in line or "\u2013" in line:
+        raise ValueError("fortune must not contain an em dash or en dash")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
